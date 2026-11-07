@@ -1,0 +1,287 @@
+<title>Mouctar Saidou</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Layout: une colonne éditoriale centrée sur 1080px ; le héros place le nom à gauche et une fiche en langage C à droite ;
+     sections en deux colonnes (titre à gauche, contenu à droite) qui s'empilent sur téléphone. */
+  :root {
+    --bg: #F2F4F1;
+    --surface: #FFFFFF;
+    --fg: #15211D;
+    --muted: #55645E;
+    --line: #D3DAD4;
+    --accent: #27358A;
+    --accent-ink: #FFFFFF;
+    --ochre: #8A5A0B;
+    --ochre-soft: #F4E7C9;
+    --code-bg: #121C18;
+    --code-fg: #D9E3DD;
+    --syn-kw: #A9B5FF;
+    --syn-str: #E8B658;
+    --syn-num: #8FD3B0;
+    --syn-com: #7E918A;
+
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E1412;
+      --surface: #151D1A;
+      --fg: #E7EDE9;
+      --muted: #9AA9A2;
+      --line: #26312C;
+      --accent: #9AA8FF;
+      --accent-ink: #0E1412;
+      --ochre: #E3AE45;
+      --ochre-soft: #2C2412;
+      --code-bg: #0A100E;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E1412;
+    --surface: #151D1A;
+    --fg: #E7EDE9;
+    --muted: #9AA9A2;
+    --line: #26312C;
+    --accent: #9AA8FF;
+    --accent-ink: #0E1412;
+    --ochre: #E3AE45;
+    --ochre-soft: #2C2412;
+    --code-bg: #0A100E;
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    padding-block: 0 56px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+
+  /* Barre du haut */
+  .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-block: 20px; }
+  .brand { font-family: var(--font-mono); font-size: 13px; letter-spacing: .04em; color: var(--muted); }
+  .top nav { display: flex; flex-wrap: wrap; gap: 4px 22px; }
+  .top nav a { color: var(--fg); text-decoration: none; font-size: 15px; padding-block: 4px; border-bottom: 1px solid transparent; }
+  .top nav a:hover { border-bottom-color: var(--accent); }
+
+  /* Héros */
+  .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px 56px; align-items: center; padding-block: 48px 72px; }
+  .coords { font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ochre); margin: 0 0 18px; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 7vw, 4.6rem); line-height: 1; letter-spacing: -.02em; margin: 0 0 20px; text-wrap: balance; }
+  .lead { font-size: 1.2rem; line-height: 1.5; max-width: 34em; margin: 0 0 28px; color: var(--fg); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 11px 20px; border-radius: 4px; font-weight: 600; font-size: 15px; text-decoration: none; border: 1.5px solid var(--accent); transition: background-color .15s, color .15s; }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); }
+  .btn.primary:hover { filter: brightness(1.1); }
+  .btn.ghost { color: var(--accent); background: transparent; }
+  .btn.ghost:hover { background: var(--accent); color: var(--accent-ink); }
+
+  .card-code { background: var(--code-bg); color: var(--code-fg); border-radius: 8px; overflow: hidden; border: 1px solid var(--line); min-width: 0; }
+  .card-code .bar { font-family: var(--font-mono); font-size: 12px; color: var(--syn-com); padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .card-code pre { margin: 0; padding: 18px 16px 20px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.75; }
+  .k { color: var(--syn-kw); } .s { color: var(--syn-str); } .n { color: var(--syn-num); } .c { color: var(--syn-com); }
+
+  /* Sections */
+  section { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 20px 56px; padding-block: 56px; border-top: 1px solid var(--line); }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; line-height: 1.15; letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+  h2 small { display: block; font-family: var(--font-mono); font-weight: 400; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .content { min-width: 0; }
+  .content p { margin: 0 0 16px; max-width: 40em; }
+
+  dl.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 28px; margin: 28px 0 0; padding: 20px 0 0; border-top: 1px solid var(--line); }
+  dl.facts dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+  dl.facts dd { margin: 0; }
+
+  /* Projets */
+  .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .project { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .project h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; line-height: 1.2; margin: 0; }
+  .project p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
+  .status { align-self: flex-start; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 3px; background: var(--ochre-soft); color: var(--ochre); }
+  .status.stage { background: var(--accent); color: var(--accent-ink); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: auto 0 0; padding: 8px 0 0; list-style: none; }
+  .tags li { font-family: var(--font-mono); font-size: 12px; color: var(--fg); border: 1px solid var(--line); padding: 2px 8px; border-radius: 3px; }
+
+  /* Compétences */
+  .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
+  .skills h3 { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ochre); font-weight: 500; margin: 0 0 8px; }
+  .skills p { margin: 0; max-width: none; }
+
+  /* Parcours */
+  .path { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .path li { display: grid; grid-template-columns: minmax(0, 170px) minmax(0, 1fr); gap: 4px 28px; padding-block: 16px; border-bottom: 1px solid var(--line); }
+  .path li:first-child { padding-top: 0; }
+  .path li:last-child { border-bottom: 0; }
+  .path .when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 2px; }
+  .path strong { display: block; font-weight: 600; }
+  .path span { color: var(--muted); font-size: 15px; }
+
+  .soon { margin-top: 28px; padding: 16px 18px; border: 1px dashed var(--line); border-radius: 6px; color: var(--muted); font-size: 15px; max-width: 40em; }
+  .soon strong { color: var(--fg); }
+
+  footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 28px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: minmax(0, 1fr); padding-block: 32px 48px; }
+    section { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-block: 44px; }
+    .projects, .skills { grid-template-columns: minmax(0, 1fr); }
+    .path li { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="brand">mouctar@maroua:~$</span>
+    <nav aria-label="Sections">
+      <a href="#apropos">À propos</a>
+      <a href="#projets">Projets</a>
+      <a href="#competences">Compétences</a>
+      <a href="#parcours">Parcours</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <p class="coords">Maroua · 10°35′ N, 14°19′ E</p>
+        <h1>Mouctar Saidou</h1>
+        <p class="lead">Étudiant ingénieur en génie logiciel. Je conçois des logiciels du langage C jusqu'au web, avec une formation de base en mathématiques appliquées.</p>
+        <div class="actions">
+          <a class="btn primary" href="#projets">Voir mes projets</a>
+          <a class="btn ghost" href="https://github.com/mouctarsaidou33-hub" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <div class="card-code" aria-label="Fiche de présentation écrite en langage C">
+        <div class="bar">profil.c</div>
+<pre><code><span class="k">struct</span> Ingenieur mouctar = {
+  .ecole      = <span class="s">"ENSPM Maroua"</span>,
+  .specialite = <span class="s">"Génie Logiciel"</span>,
+  .annee      = <span class="n">4</span>,
+  .base       = <span class="s">"Maths appliquées"</span>,
+  .langues    = {
+    <span class="s">"français"</span>, <span class="s">"foulfouldé"</span>,
+    <span class="s">"arabe"</span>, <span class="s">"anglais"</span>
+  },
+};</code></pre>
+      </div>
+    </div>
+
+    <section id="apropos">
+      <h2><small>Présentation</small>À propos</h2>
+      <div class="content">
+        <p>Je suis admis en 4e année du cycle ingénieur de conception, spécialité génie logiciel, à l'École Nationale Supérieure Polytechnique de Maroua. Avant cela, j'ai obtenu un diplôme en mathématiques appliquées à l'Université de Maroua, ce qui m'aide à aborder les problèmes de façon rigoureuse.</p>
+        <p>J'aime construire des outils utiles à ma région : gestion de files d'attente, mise en relation des acteurs de l'agriculture, prévision des rendements dans l'Extrême-Nord. Je mène aussi une activité commerciale indépendante depuis 2019.</p>
+        <dl class="facts">
+          <dt>École</dt><dd>ENSPM, Maroua</dd>
+          <dt>Spécialité</dt><dd>Génie logiciel, 4e année</dd>
+          <dt>Diplôme</dt><dd>Mathématiques appliquées, Université de Maroua</dd>
+          <dt>Centres d'intérêt</dt><dd>Lecture, sport, projets sociaux, apprentissage continu</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="projets">
+      <h2><small>Réalisations</small>Projets</h2>
+      <div class="content">
+        <div class="projects">
+          <article class="project">
+            <span class="status stage">Projet de stage</span>
+            <h3>File d'attente bancaire avec priorité VIP</h3>
+            <p>Système écrit en C pour une agence bancaire : clients VIP et ordinaires, mécanisme anti-famine, vieillissement des tickets, plusieurs guichets en parallèle, journal persistant, mode simulation et interface graphique. Réalisé chez Maroua Innovation Technology, avec rapport et soutenance.</p>
+            <ul class="tags"><li>C</li><li>GTK</li><li>Makefile</li><li>UML</li></ul>
+          </article>
+          <article class="project">
+            <span class="status">En cours</span>
+            <h3>Nyamde Sahel</h3>
+            <p>Plateforme numérique qui relie paysans, coopératives, négociants et consommateurs autour de l'oignon, du maïs et du bétail : marketplace, transport suivi et paiements par mobile money. « Nyamde » signifie « production » en foulfouldé.</p>
+            <ul class="tags"><li>Conception</li><li>Agrilogistique</li><li>Mobile money</li></ul>
+          </article>
+          <article class="project">
+            <span class="status">Cahier des charges</span>
+            <h3>AgriPredict Extrême-Nord</h3>
+            <p>Système de prévision des rendements par régression multiple pour le mil, le sorgho, le maïs, le riz, l'arachide et le niébé dans la région de l'Extrême-Nord.</p>
+            <ul class="tags"><li>Python</li><li>scikit-learn</li><li>Régression multiple</li></ul>
+          </article>
+          <article class="project">
+            <span class="status">Projet de groupe</span>
+            <h3>ENSPM Alumni Connect</h3>
+            <p>Plateforme pour les anciens de l'ENSPM. J'ai rédigé le cahier des charges et développé le formulaire d'inscription en React, sur une branche Git dédiée.</p>
+            <ul class="tags"><li>React</li><li>Git / GitHub</li></ul>
+          </article>
+          <article class="project">
+            <span class="status">Apprentissage</span>
+            <h3>PolyQuiz</h3>
+            <p>Application de quiz conçue pour maîtriser les hooks avancés de React : useFetch, useReducer, useContext, useRef et useMemo.</p>
+            <ul class="tags"><li>React</li><li>Hooks</li></ul>
+          </article>
+          <article class="project">
+            <span class="status">Apprentissage</span>
+            <h3>TaskFlow</h3>
+            <p>Gestionnaire de tâches construit avec Vite et React Router, avec sauvegarde dans le navigateur et hooks personnalisés.</p>
+            <ul class="tags"><li>React</li><li>Vite</li><li>localStorage</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="competences">
+      <h2><small>Boîte à outils</small>Compétences</h2>
+      <div class="content">
+        <div class="skills">
+          <div><h3>Programmation</h3><p>C, Java, Python, SQL (MySQL), VHDL, Prolog</p></div>
+          <div><h3>Web</h3><p>HTML, CSS</p></div>
+          <div><h3>Bases de l'informatique</h3><p>Logique numérique et circuits, logique formelle, bases de données, systèmes d'exploitation, programmation orientée objet, virtualisation (VirtualBox, VMware)</p></div>
+          <div><h3>Mathématiques</h3><p>Mathématiques appliquées, régression multiple</p></div>
+          <div><h3>Outils</h3><p>Git et GitHub, Excel, Word, PowerPoint, Publisher, Canva, CapCut</p></div>
+          <div><h3>Langues</h3><p>Français et foulfouldé (courant), arabe et anglais (intermédiaire)</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="parcours">
+      <h2><small>Formation et expérience</small>Parcours</h2>
+      <div class="content">
+        <ol class="path">
+          <li><span class="when">Depuis 2019</span><div><strong>Activité commerciale indépendante</strong><span>Vente de produits locaux.</span></div></li>
+          <li><span class="when">Université de Maroua</span><div><strong>Diplôme en mathématiques appliquées</strong><span>Base solide en analyse, modélisation et statistiques.</span></div></li>
+          <li><span class="when">ENSPM, Maroua</span><div><strong>Cycle ingénieur de conception, génie logiciel</strong><span>Admis en 4e année après la 3e année du cycle.</span></div></li>
+          <li><span class="when">Juillet – août 2026</span><div><strong>Stage à Maroua Innovation Technology</strong><span>Conception d'un système de gestion de file d'attente bancaire en C. Évalué 14/15 par l'entreprise.</span></div></li>
+        </ol>
+        <p class="soon"><strong>Articles à venir.</strong> Je prépare une série d'articles sur le génie logiciel, l'informatique générale et les mathématiques appliquées.</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2><small>Échanger</small>Contact</h2>
+      <div class="content">
+        <p>Je suis disponible pour des opportunités à Maroua et pour des projets logiciels. Le plus simple pour voir mon travail : mon profil GitHub.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://github.com/mouctarsaidou33-hub" target="_blank" rel="noopener">github.com/mouctarsaidou33-hub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Mouctar Saidou</span>
+    <span>Maroua, Cameroun</span>
+  </footer>
+</div>
